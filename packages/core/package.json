@@ -1,0 +1,27 @@
+{
+  "name": "@agentland/core",
+  "version": "1.0.0",
+  "description": "Pure founding AgentLand scoring and public-fact trust primitives",
+  "type": "module",
+  "license": "MIT",
+  "sideEffects": false,
+  "engines": {
+    "node": ">=22"
+  },
+  "files": [
+    "dist",
+    "LICENSE"
+  ],
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  }
+}
