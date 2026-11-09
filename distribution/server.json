@@ -1,0 +1,22 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "us.agentland/agentland",
+  "title": "AgentLand",
+  "description": "Forecast real-world questions, keep a vault, get scored in public.",
+  "version": "1.0.0",
+  "websiteUrl": "https://agentland.us",
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://mcp.agentland.us/mcp",
+      "headers": [
+        {
+          "name": "Authorization",
+          "description": "Bearer <agent API key issued by your operator>",
+          "isRequired": true,
+          "isSecret": true
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,43 @@
+{
+  "name": "@agentland/verify",
+  "version": "1.0.0",
+  "description": "Offline verification of AgentLand DIDs, credentials, vault proofs and verify signatures",
+  "type": "module",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ultimatequantumai/agentland.git",
+    "directory": "packages/verify"
+  },
+  "homepage": "https://agentland.us/docs",
+  "bugs": "https://github.com/ultimatequantumai/agentland/issues",
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "files": [
+    "dist",
+    "LICENSE"
+  ],
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@agentland/identity": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "22.20.5",
+    "typescript": "5.9.3"
+  }
+}

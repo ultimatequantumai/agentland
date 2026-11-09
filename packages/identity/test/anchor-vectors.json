@@ -1,0 +1,135 @@
+{
+  "attribution": "agentland-anchor/1 vectors. A1 from 15-RESEARCH F9 (hand RLP + @noble/hashes keccak_256 + @noble/curves secp256k1 2.4.0, cross-checked with eth-account 0.13.7: identical raw transaction, hash and recovered sender). The key is the EIP-155 example key 0x46 repeated 32 times and is never a real notary key. Never edit after the G-6 sign-off.",
+  "a1": {
+    "test_private_key_hex": "4646464646464646464646464646464646464646464646464646464646464646",
+    "public_key_spki_der_hex": "3056301006072a8648ce3d020106052b8104000a034200044bc2a31265153f07e70e0bab08724e6b85e217f8cd628ceb62974247bb493382ce28cab79ad7119ee1ad3ebcdb98a16805211530ecc6cfefa1b88e6dff99232a",
+    "address": "0x9d8a62f656a8d1615c1294fd71e9cfb3e4855a4f",
+    "chain_id": "1",
+    "nonce": "0",
+    "max_priority_fee_per_gas": "1000000000",
+    "max_fee_per_gas": "20000000000",
+    "gas_limit": "24920",
+    "value": "0",
+    "date": "2026-11-02",
+    "root_hex": "9f3a000000000000000000000000000000000000000000000000000000000000",
+    "data_utf8": "agentland-audit-root/1 2026-11-02 9f3a000000000000000000000000000000000000000000000000000000000000",
+    "signing_hash": "2b59acf9860e9a1bbe1a23dac4ce19dd6094769e0d5dba001850275c2ee9af7e",
+    "kms_der_signature": "30440220462672e160765bc87519449f71de08bdd8991ab7e67ada152c218851947290ba0220298849a5390838682e48f7ae473d950e551590a6e17088068bceb3ed02f7d266",
+    "y_parity": 1,
+    "r": "462672e160765bc87519449f71de08bdd8991ab7e67ada152c218851947290ba",
+    "s": "298849a5390838682e48f7ae473d950e551590a6e17088068bceb3ed02f7d266",
+    "raw_tx": "0x02f8ce0180843b9aca008504a817c800826158949d8a62f656a8d1615c1294fd71e9cfb3e4855a4f80b8626167656e746c616e642d61756469742d726f6f742f3120323032362d31312d30322039663361303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030c001a0462672e160765bc87519449f71de08bdd8991ab7e67ada152c218851947290baa0298849a5390838682e48f7ae473d950e551590a6e17088068bceb3ed02f7d266",
+    "tx_hash": "0xc0ba6352432050a717a811998b6c69c56ca1196ff0087e61037e32e7ec17f8dd"
+  },
+  "high_s": {
+    "digest": "0000000000000000000000000000000000000000000000000000000000000001",
+    "der": "3046022100b03ce008098985ee2bf85eb0cc032e7cdf986ada44b24418fd1b9a0bfe7574a0022100ae2778aa9d52f01370094a81a5c9edb90f251e22e96b72260460b3786e308e50",
+    "r": "b03ce008098985ee2bf85eb0cc032e7cdf986ada44b24418fd1b9a0bfe7574a0",
+    "s_high": "ae2778aa9d52f01370094a81a5c9edb90f251e22e96b72260460b3786e308e50",
+    "s_low": "51d8875562ad0fec8ff6b57e5a361245ab89bec3c5dd2e15bb71ab146205b2f1",
+    "y_parity": 1
+  },
+  "guard": {
+    "expected": {
+      "chain_id": "1",
+      "address": "0x9d8a62f656a8d1615c1294fd71e9cfb3e4855a4f",
+      "max_fee_per_gas_cap": "50000000000"
+    },
+    "cases": [
+      {
+        "name": "value-one",
+        "change": {
+          "value": "1"
+        },
+        "reason": "value"
+      },
+      {
+        "name": "to-zero-address",
+        "change": {
+          "to": "0x0000000000000000000000000000000000000001"
+        },
+        "reason": "destination"
+      },
+      {
+        "name": "payload-other-root",
+        "change": {
+          "data_utf8": "agentland-audit-root/1 2026-11-02 9f3b000000000000000000000000000000000000000000000000000000000000"
+        },
+        "reason": "payload"
+      },
+      {
+        "name": "chain-sepolia",
+        "change": {
+          "chain_id": "11155111"
+        },
+        "reason": "chain"
+      },
+      {
+        "name": "fee-over-cap",
+        "change": {
+          "max_fee_per_gas": "50000000001"
+        },
+        "reason": "fee_cap"
+      },
+      {
+        "name": "tip-over-fee",
+        "change": {
+          "max_priority_fee_per_gas": "20000000001"
+        },
+        "reason": "fee_cap"
+      },
+      {
+        "name": "gas-below-min",
+        "change": {
+          "gas_limit": "20999"
+        },
+        "reason": "gas"
+      },
+      {
+        "name": "gas-above-max",
+        "change": {
+          "gas_limit": "100001"
+        },
+        "reason": "gas"
+      },
+      {
+        "name": "to-uppercase",
+        "change": {
+          "to": "0x9D8A62F656A8D1615C1294FD71E9CFB3E4855A4F"
+        },
+        "reason": "encoding"
+      },
+      {
+        "name": "nonce-negative",
+        "change": {
+          "nonce": "-1"
+        },
+        "reason": "encoding"
+      }
+    ],
+    "passes": [
+      {
+        "name": "a1",
+        "change": {}
+      },
+      {
+        "name": "gas-at-min",
+        "change": {
+          "gas_limit": "21000"
+        }
+      },
+      {
+        "name": "gas-at-max",
+        "change": {
+          "gas_limit": "100000"
+        }
+      },
+      {
+        "name": "fee-at-cap",
+        "change": {
+          "max_fee_per_gas": "50000000000"
+        }
+      }
+    ]
+  }
+}

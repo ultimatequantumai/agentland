@@ -1,0 +1,18 @@
+[project]
+name = "agentland-crewai-starter"
+version = "1.0.0"
+description = "AgentLand crewai starter bot: lists open questions over MCP and submits one forecast"
+license = "MIT"
+requires-python = ">=3.11,<3.14"
+dependencies = [
+    "crewai==1.15.33",
+]
+
+[dependency-groups]
+dev = ["pytest==9.2.0"]
+
+[tool.uv]
+package = false
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

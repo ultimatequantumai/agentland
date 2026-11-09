@@ -1,0 +1,178 @@
+name: Release
+
+# AgentLand's public release mirror publishes from here only (C1): npm with provenance, PyPI with
+# attestations, then the official MCP Registry entry. Every job runs in the `release` environment,
+# which needs the owner's approval. A version already on a registry is skipped, never overwritten.
+on:
+  workflow_dispatch:
+    inputs:
+      pack_only:
+        description: Pack the npm tarballs and stop (owner OTP first publish)
+        type: boolean
+        default: false
+      skip_mcp:
+        description: Skip the MCP Registry while its DNS namespace record is deferred
+        type: boolean
+        default: false
+
+permissions: {}
+
+concurrency: release
+
+jobs:
+  npm:
+    runs-on: ubuntu-latest
+    environment: release
+    timeout-minutes: 30
+    permissions:
+      contents: read
+      id-token: write
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: pnpm/action-setup@73e46992e05b19abd31f2f3c20e0e7370d762115 # v6.1.1
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 22.23.3
+          registry-url: https://registry.npmjs.org
+      - run: npm install -g npm@11.21.1
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm -r build
+      - name: Pack identity, verify, core, sdk
+        run: |
+          mkdir -p dist-release
+          # pnpm pack rewrites workspace: specifiers to exact versions; SHA512SUMS keeps publish order.
+          for p in identity verify core sdk-ts; do
+            out="$RUNNER_TEMP/pack/$p"
+            mkdir -p "$out"
+            pnpm --filter "./packages/$p" pack --pack-destination "$out"
+            for tarball in "$out"/*.tgz; do
+              file=$(basename "$tarball")
+              mv "$tarball" "dist-release/$file"
+              printf 'sha512-%s  %s\n' "$(openssl dgst -sha512 -binary "dist-release/$file" | base64 -w0)" "$file" >> dist-release/SHA512SUMS
+            done
+          done
+          cat dist-release/SHA512SUMS >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v5.0.0
+        with:
+          name: npm-tarballs
+          path: dist-release/
+      - name: Publish to npm in order
+        if: ${{ !inputs.pack_only }}
+        env:
+          # Owner first-publish token only; empty once trusted publishing (OIDC) replaces it.
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          while read -r _ file <&3; do
+            manifest=$(tar -xOzf "dist-release/$file" package/package.json)
+            name=$(jq -r .name <<<"$manifest")
+            version=$(jq -r .version <<<"$manifest")
+            if [ -n "$(npm view "$name@$version" version 2>/dev/null || true)" ]; then
+              echo "$name@$version is already on npm; skipped"
+              continue
+            fi
+            npm publish "dist-release/$file" --provenance --access public
+          done 3< dist-release/SHA512SUMS
+
+  pypi:
+    needs: npm
+    if: ${{ !inputs.pack_only }}
+    runs-on: ubuntu-latest
+    environment: release
+    timeout-minutes: 20
+    permissions:
+      contents: read
+      id-token: write
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a15bba460eec2 # v10.3.3
+        with:
+          version: "0.13.6"
+          python-version: "3.12"
+      - name: Build agentland
+        working-directory: packages/sdk-py
+        run: |
+          uv build --no-sources
+          sha256sum dist/* >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v5.0.0
+        with:
+          name: python-dist
+          path: packages/sdk-py/dist/
+      - name: Check whether this version is on PyPI
+        id: pypi
+        run: |
+          version=$(sed -n 's/^version = "\(.*\)"$/\1/p' packages/sdk-py/pyproject.toml)
+          status=$(curl -s -o /dev/null -w '%{http_code}' "https://pypi.org/pypi/agentland/$version/json")
+          echo "published=$([ "$status" = 200 ] && echo true || echo false)" >> "$GITHUB_OUTPUT"
+      - if: steps.pypi.outputs.published != 'true'
+        uses: pypa/gh-action-pypi-publish@7245906fb61fa33a13554f9d5fb856fe61758086 # v1.14.3
+        with:
+          packages-dir: packages/sdk-py/dist
+
+  mcp:
+    needs: pypi
+    if: ${{ !inputs.pack_only && !inputs.skip_mcp }}
+    runs-on: ubuntu-latest
+    environment: release
+    timeout-minutes: 15
+    permissions:
+      contents: read
+      id-token: write
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Download mcp-publisher v1.8.7
+        working-directory: ${{ runner.temp }}
+        run: |
+          base=https://github.com/modelcontextprotocol/registry/releases/download/v1.8.7
+          curl -fsSLO "$base/mcp-publisher_linux_amd64.tar.gz"
+          curl -fsSLO "$base/mcp-publisher_linux_amd64.tar.gz.sigstore.json"
+          echo "00b21004149a4ce66f0782508ae4a2bce67d1bea395a8da0bd8028159fb59579  mcp-publisher_linux_amd64.tar.gz" | sha256sum -c
+      - uses: sigstore/cosign-installer@7e8b541eb2e61bf99390e1afd4be13a184e9ebc5 # v3.10.1
+      - name: Verify the release signature, then install
+        working-directory: ${{ runner.temp }}
+        run: |
+          cosign verify-blob \
+            --new-bundle-format \
+            --bundle mcp-publisher_linux_amd64.tar.gz.sigstore.json \
+            --certificate-identity https://github.com/modelcontextprotocol/registry/.github/workflows/release.yml@refs/tags/v1.8.7 \
+            --certificate-oidc-issuer https://token.actions.githubusercontent.com \
+            mcp-publisher_linux_amd64.tar.gz
+          mkdir -p bin
+          tar -xzf mcp-publisher_linux_amd64.tar.gz -C bin mcp-publisher
+          echo "$RUNNER_TEMP/bin" >> "$GITHUB_PATH"
+      - name: Check whether this version is in the MCP Registry
+        id: registry
+        working-directory: distribution
+        run: |
+          version=$(jq -r .version server.json)
+          status=$(curl -s -o /dev/null -w '%{http_code}' "https://registry.modelcontextprotocol.io/v0.1/servers/us.agentland%2Fagentland/versions/$version")
+          echo "published=$([ "$status" = 200 ] && echo true || echo false)" >> "$GITHUB_OUTPUT"
+      - if: steps.registry.outputs.published != 'true'
+        uses: google-github-actions/auth@7c6bc770dae815cd3e89ee6cdf493a5fab2cc093 # v3.0.0
+        with:
+          workload_identity_provider: ${{ vars.GCP_WORKLOAD_IDENTITY_PROVIDER }}
+          service_account: ${{ vars.GCP_MCP_SERVICE_ACCOUNT }}
+      - name: Publish us.agentland/agentland
+        if: steps.registry.outputs.published != 'true'
+        working-directory: distribution
+        env:
+          MCP_KMS_KEY_VERSION: ${{ vars.MCP_KMS_KEY_VERSION }}
+        run: |
+          mcp-publisher login dns google-kms --domain=agentland.us --resource="$MCP_KMS_KEY_VERSION"
+          mcp-publisher publish
+      - name: Read the registry entry back
+        run: curl -fsS "https://registry.modelcontextprotocol.io/v0.1/servers/us.agentland%2Fagentland/versions/latest"

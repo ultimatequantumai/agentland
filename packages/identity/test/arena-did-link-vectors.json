@@ -1,0 +1,544 @@
+{
+  "attribution": {
+    "key": "RFC8032 section7.1 test1 (standards-vectors.json ed25519[0]); published test-only seed, never a production key. https://www.rfc-editor.org/rfc/rfc8032.html#section-7.1",
+    "arena_preimage_source": "packages/identity/src/arena-forecast.ts arenaForecastSigningMessage: UTF-8 \"agentland-arena-forecast/1\\n\" followed by requestSigningMessage",
+    "arena_signature_encoding": "padded standard base64 (88 chars) exactly as sent in X-AL-Signature",
+    "did_link_source": "packages/identity/src/did-link.ts didLinkSigningBytes: RFC 8785 of {action, did, format, linked_did, timestamp}",
+    "did_link_signature_encoding": "unpadded base64url (86 chars), the agentland-did/1 statement encoding",
+    "signatures": "filled by the parent from the built @agentland/identity (signEd25519); RESEARCH F12 values are the anchors"
+  },
+  "private_pkcs8_b64": "MC4CAQAwBQYDK2VwBCIEIJ1hsZ3v/VpguoRK9JLsLMREScVpezJpGXA7rAMcrn9g",
+  "public_jwk": {
+    "kty": "OKP",
+    "crv": "Ed25519",
+    "x": "11qYAYKxCrfVS_7TyWQHOg7hcvPapiMlrwIaaPcHURo"
+  },
+  "arena_forecast": {
+    "prefix_utf8": "agentland-arena-forecast/1\n",
+    "vectors": [
+      {
+        "name": "arena-forecast-submit",
+        "method": "POST",
+        "request_target": "/v1/arenas/00000000-0000-4000-8000-0000000000a1/questions/00000000-0000-4000-8000-0000000000b1/forecasts",
+        "timestamp": "2026-11-01T12:00:00.000Z",
+        "raw_body_b64": "eyJwIjowLjYyfQ==",
+        "body_sha256_hex": "d32ba436f82f717fde9bab248776b340d5923958d77da5f732ffad6be2237cef",
+        "message_utf8": "agentland-arena-forecast/1\nPOST\n/v1/arenas/00000000-0000-4000-8000-0000000000a1/questions/00000000-0000-4000-8000-0000000000b1/forecasts\n2026-11-01T12:00:00.000Z\nd32ba436f82f717fde9bab248776b340d5923958d77da5f732ffad6be2237cef",
+        "signature_b64": "o5++WnXtH9SlR6StgSF9uCpR7W1l1n6O6Q37yoh4IbZZpcwBMbBDqllNn71jg7Ch75IIP5E+kE49ZKS7psPQBQ=="
+      }
+    ],
+    "tamper": [
+      {
+        "name": "arena-signature-over-unprefixed-preimage",
+        "base": "arena-forecast-submit",
+        "message_utf8": "POST\n/v1/arenas/00000000-0000-4000-8000-0000000000a1/questions/00000000-0000-4000-8000-0000000000b1/forecasts\n2026-11-01T12:00:00.000Z\nd32ba436f82f717fde9bab248776b340d5923958d77da5f732ffad6be2237cef",
+        "signature_b64": "o5++WnXtH9SlR6StgSF9uCpR7W1l1n6O6Q37yoh4IbZZpcwBMbBDqllNn71jg7Ch75IIP5E+kE49ZKS7psPQBQ=="
+      },
+      {
+        "name": "public-signature-over-prefixed-preimage",
+        "base_public": "forecast-submit",
+        "message_utf8": "agentland-arena-forecast/1\nPOST\n/v1/questions/00000000-0000-4000-8000-000000000001/forecasts\n2026-10-31T12:00:00.000Z\nd32ba436f82f717fde9bab248776b340d5923958d77da5f732ffad6be2237cef",
+        "signature_b64": "ygq0yahXqN4p12KgMlu2jjJSwvoyhxNUgeXOe5X78PF8mjgE+Ym7yzqMCnMbVip8QeBMxmvNrAv2RA7c6KfzBw=="
+      }
+    ]
+  },
+  "did_link": {
+    "agent_did": "did:web:agentland.us:agents:weatherwise",
+    "now": "2026-11-01T12:00:00.000Z",
+    "vectors": [
+      {
+        "name": "link",
+        "statement": {
+          "action": "link",
+          "did": "did:web:agentland.us:agents:weatherwise",
+          "format": "agentland-did-link/1",
+          "linked_did": "did:web:lab.example.com:agents:w1",
+          "timestamp": "2026-11-01T12:00:00.000Z"
+        },
+        "canonical_utf8": "{\"action\":\"link\",\"did\":\"did:web:agentland.us:agents:weatherwise\",\"format\":\"agentland-did-link/1\",\"linked_did\":\"did:web:lab.example.com:agents:w1\",\"timestamp\":\"2026-11-01T12:00:00.000Z\"}",
+        "signature": "dQUF5IyM2R5o7lThd6Aslaza9pFGrmcWVTMzwoT5rho0Nqef4q2RXcMQPQUVYWqgayn113ZkUIgf67-WO0LxCA"
+      },
+      {
+        "name": "unlink",
+        "statement": {
+          "action": "unlink",
+          "did": "did:web:agentland.us:agents:weatherwise",
+          "format": "agentland-did-link/1",
+          "linked_did": "did:web:lab.example.com:agents:w1",
+          "timestamp": "2026-11-02T12:00:00.000Z"
+        },
+        "canonical_utf8": "{\"action\":\"unlink\",\"did\":\"did:web:agentland.us:agents:weatherwise\",\"format\":\"agentland-did-link/1\",\"linked_did\":\"did:web:lab.example.com:agents:w1\",\"timestamp\":\"2026-11-02T12:00:00.000Z\"}",
+        "signature": "byyXfGxWKa-ypAFWVE_4Q0HaK7vZQZrdGDMjbVsjmpXux_ttfJUYWNfmNfPWxsUMmC7sb1awd87kxedoQ4gcDw"
+      }
+    ],
+    "validation": [
+      {
+        "name": "V-link",
+        "statement": {
+          "action": "link",
+          "did": "did:web:agentland.us:agents:weatherwise",
+          "format": "agentland-did-link/1",
+          "linked_did": "did:web:lab.example.com:agents:w1",
+          "timestamp": "2026-11-01T12:00:00.000Z"
+        },
+        "now": "2026-11-01T12:00:00.000Z",
+        "active_links": [],
+        "error": null
+      },
+      {
+        "name": "V-unlink-active",
+        "statement": {
+          "action": "unlink",
+          "did": "did:web:agentland.us:agents:weatherwise",
+          "format": "agentland-did-link/1",
+          "linked_did": "did:web:lab.example.com:agents:w1",
+          "timestamp": "2026-11-01T12:00:00.000Z"
+        },
+        "now": "2026-11-01T12:00:00.000Z",
+        "active_links": ["did:web:lab.example.com:agents:w1"],
+        "error": null
+      },
+      {
+        "name": "V-percent",
+        "statement": {
+          "action": "link",
+          "did": "did:web:agentland.us:agents:weatherwise",
+          "format": "agentland-did-link/1",
+          "linked_did": "did:web:l%C3%A4b.example.com",
+          "timestamp": "2026-11-01T12:00:00.000Z"
+        },
+        "now": "2026-11-01T12:00:00.000Z",
+        "active_links": [],
+        "error": null
+      },
+      {
+        "name": "V-other-method",
+        "statement": {
+          "action": "link",
+          "did": "did:web:agentland.us:agents:weatherwise",
+          "format": "agentland-did-link/1",
+          "linked_did": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+          "timestamp": "2026-11-01T12:00:00.000Z"
+        },
+        "now": "2026-11-01T12:00:00.000Z",
+        "active_links": [],
+        "error": null
+      },
+      {
+        "name": "V-fresh-plus-5min",
+        "statement": {
+          "action": "link",
+          "did": "did:web:agentland.us:agents:weatherwise",
+          "format": "agentland-did-link/1",
+          "linked_did": "did:web:lab.example.com:agents:w1",
+          "timestamp": "2026-11-01T12:05:00.000Z"
+        },
+        "now": "2026-11-01T12:00:00.000Z",
+        "active_links": [],
+        "error": null
+      },
+      {
+        "name": "V-fresh-minus-5min",
+        "statement": {
+          "action": "link",
+          "did": "did:web:agentland.us:agents:weatherwise",
+          "format": "agentland-did-link/1",
+          "linked_did": "did:web:lab.example.com:agents:w1",
+          "timestamp": "2026-11-01T11:55:00.000Z"
+        },
+        "now": "2026-11-01T12:00:00.000Z",
+        "active_links": [],
+        "error": null
+      },
+      {
+        "name": "N1-own-did",
+        "statement": {
+          "action": "link",
+          "did": "did:web:agentland.us:agents:weatherwise",
+          "format": "agentland-did-link/1",
+          "linked_did": "did:web:agentland.us:agents:weatherwise",
+          "timestamp": "2026-11-01T12:00:00.000Z"
+        },
+        "now": "2026-11-01T12:00:00.000Z",
+        "active_links": [],
+        "error": "TypeError"
+      },
+      {
+        "name": "N2-agentland-agent",
+        "statement": {
+          "action": "link",
+          "did": "did:web:agentland.us:agents:weatherwise",
+          "format": "agentland-did-link/1",
+          "linked_did": "did:web:agentland.us:agents:other",
+          "timestamp": "2026-11-01T12:00:00.000Z"
+        },
+        "now": "2026-11-01T12:00:00.000Z",
+        "active_links": [],
+        "error": "TypeError"
+      },
+      {
+        "name": "N2-agentland-platform",
+        "statement": {
+          "action": "link",
+          "did": "did:web:agentland.us:agents:weatherwise",
+          "format": "agentland-did-link/1",
+          "linked_did": "did:web:agentland.us",
+          "timestamp": "2026-11-01T12:00:00.000Z"
+        },
+        "now": "2026-11-01T12:00:00.000Z",
+        "active_links": [],
+        "error": "TypeError"
+      },
+      {
+        "name": "N2-agentland-host-case",
+        "statement": {
+          "action": "link",
+          "did": "did:web:agentland.us:agents:weatherwise",
+          "format": "agentland-did-link/1",
+          "linked_did": "did:web:AgentLand.us:agents:other",
+          "timestamp": "2026-11-01T12:00:00.000Z"
+        },
+        "now": "2026-11-01T12:00:00.000Z",
+        "active_links": [],
+        "error": "TypeError"
+      },
+      {
+        "name": "N3-abnf-method-case",
+        "statement": {
+          "action": "link",
+          "did": "did:web:agentland.us:agents:weatherwise",
+          "format": "agentland-did-link/1",
+          "linked_did": "did:Web:x",
+          "timestamp": "2026-11-01T12:00:00.000Z"
+        },
+        "now": "2026-11-01T12:00:00.000Z",
+        "active_links": [],
+        "error": "TypeError"
+      },
+      {
+        "name": "N3-abnf-empty-id",
+        "statement": {
+          "action": "link",
+          "did": "did:web:agentland.us:agents:weatherwise",
+          "format": "agentland-did-link/1",
+          "linked_did": "did:web:",
+          "timestamp": "2026-11-01T12:00:00.000Z"
+        },
+        "now": "2026-11-01T12:00:00.000Z",
+        "active_links": [],
+        "error": "TypeError"
+      },
+      {
+        "name": "N3-abnf-space",
+        "statement": {
+          "action": "link",
+          "did": "did:web:agentland.us:agents:weatherwise",
+          "format": "agentland-did-link/1",
+          "linked_did": "did:web:lab example.com",
+          "timestamp": "2026-11-01T12:00:00.000Z"
+        },
+        "now": "2026-11-01T12:00:00.000Z",
+        "active_links": [],
+        "error": "TypeError"
+      },
+      {
+        "name": "N4-ninth-active",
+        "statement": {
+          "action": "link",
+          "did": "did:web:agentland.us:agents:weatherwise",
+          "format": "agentland-did-link/1",
+          "linked_did": "did:web:lab.example.com:agents:w1",
+          "timestamp": "2026-11-01T12:00:00.000Z"
+        },
+        "now": "2026-11-01T12:00:00.000Z",
+        "active_links": [
+          "did:example:link1",
+          "did:example:link2",
+          "did:example:link3",
+          "did:example:link4",
+          "did:example:link5",
+          "did:example:link6",
+          "did:example:link7",
+          "did:example:link8"
+        ],
+        "error": "RangeError"
+      },
+      {
+        "name": "N5-unlink-inactive",
+        "statement": {
+          "action": "unlink",
+          "did": "did:web:agentland.us:agents:weatherwise",
+          "format": "agentland-did-link/1",
+          "linked_did": "did:web:lab.example.com:agents:w1",
+          "timestamp": "2026-11-01T12:00:00.000Z"
+        },
+        "now": "2026-11-01T12:00:00.000Z",
+        "active_links": [],
+        "error": "RangeError"
+      },
+      {
+        "name": "N6-non-ascii",
+        "statement": {
+          "action": "link",
+          "did": "did:web:agentland.us:agents:weatherwise",
+          "format": "agentland-did-link/1",
+          "linked_did": "did:web:läb.example.com",
+          "timestamp": "2026-11-01T12:00:00.000Z"
+        },
+        "now": "2026-11-01T12:00:00.000Z",
+        "active_links": [],
+        "error": "TypeError"
+      },
+      {
+        "name": "X-stale-future",
+        "statement": {
+          "action": "link",
+          "did": "did:web:agentland.us:agents:weatherwise",
+          "format": "agentland-did-link/1",
+          "linked_did": "did:web:lab.example.com:agents:w1",
+          "timestamp": "2026-11-01T12:05:00.001Z"
+        },
+        "now": "2026-11-01T12:00:00.000Z",
+        "active_links": [],
+        "error": "RangeError"
+      },
+      {
+        "name": "X-stale-past",
+        "statement": {
+          "action": "link",
+          "did": "did:web:agentland.us:agents:weatherwise",
+          "format": "agentland-did-link/1",
+          "linked_did": "did:web:lab.example.com:agents:w1",
+          "timestamp": "2026-11-01T11:54:59.999Z"
+        },
+        "now": "2026-11-01T12:00:00.000Z",
+        "active_links": [],
+        "error": "RangeError"
+      },
+      {
+        "name": "X-relink",
+        "statement": {
+          "action": "link",
+          "did": "did:web:agentland.us:agents:weatherwise",
+          "format": "agentland-did-link/1",
+          "linked_did": "did:web:lab.example.com:agents:w1",
+          "timestamp": "2026-11-01T12:00:00.000Z"
+        },
+        "now": "2026-11-01T12:00:00.000Z",
+        "active_links": ["did:web:lab.example.com:agents:w1"],
+        "error": "RangeError"
+      },
+      {
+        "name": "X-did-url",
+        "statement": {
+          "action": "link",
+          "did": "did:web:agentland.us:agents:weatherwise",
+          "format": "agentland-did-link/1",
+          "linked_did": "did:web:lab.example.com:agents:w1#key-1",
+          "timestamp": "2026-11-01T12:00:00.000Z"
+        },
+        "now": "2026-11-01T12:00:00.000Z",
+        "active_links": [],
+        "error": "TypeError"
+      },
+      {
+        "name": "X-wrong-did",
+        "statement": {
+          "action": "link",
+          "did": "did:web:agentland.us:agents:other",
+          "format": "agentland-did-link/1",
+          "linked_did": "did:web:lab.example.com:agents:w1",
+          "timestamp": "2026-11-01T12:00:00.000Z"
+        },
+        "now": "2026-11-01T12:00:00.000Z",
+        "active_links": [],
+        "error": "TypeError"
+      },
+      {
+        "name": "X-format",
+        "statement": {
+          "action": "link",
+          "did": "did:web:agentland.us:agents:weatherwise",
+          "format": "agentland-did-link/2",
+          "linked_did": "did:web:lab.example.com:agents:w1",
+          "timestamp": "2026-11-01T12:00:00.000Z"
+        },
+        "now": "2026-11-01T12:00:00.000Z",
+        "active_links": [],
+        "error": "TypeError"
+      },
+      {
+        "name": "X-action",
+        "statement": {
+          "action": "relink",
+          "did": "did:web:agentland.us:agents:weatherwise",
+          "format": "agentland-did-link/1",
+          "linked_did": "did:web:lab.example.com:agents:w1",
+          "timestamp": "2026-11-01T12:00:00.000Z"
+        },
+        "now": "2026-11-01T12:00:00.000Z",
+        "active_links": [],
+        "error": "TypeError"
+      },
+      {
+        "name": "X-timestamp",
+        "statement": {
+          "action": "link",
+          "did": "did:web:agentland.us:agents:weatherwise",
+          "format": "agentland-did-link/1",
+          "linked_did": "did:web:lab.example.com:agents:w1",
+          "timestamp": "2026-11-01T12:00:00Z"
+        },
+        "now": "2026-11-01T12:00:00.000Z",
+        "active_links": [],
+        "error": "TypeError"
+      }
+    ],
+    "active": [
+      {
+        "name": "A1-by-timestamp",
+        "history": [
+          {
+            "action": "link",
+            "did": "did:web:agentland.us:agents:weatherwise",
+            "format": "agentland-did-link/1",
+            "linked_did": "did:example:charlie",
+            "timestamp": "2026-11-01T12:02:00.000Z"
+          },
+          {
+            "action": "link",
+            "did": "did:web:agentland.us:agents:weatherwise",
+            "format": "agentland-did-link/1",
+            "linked_did": "did:example:bravo",
+            "timestamp": "2026-11-01T12:00:00.000Z"
+          },
+          {
+            "action": "link",
+            "did": "did:web:agentland.us:agents:weatherwise",
+            "format": "agentland-did-link/1",
+            "linked_did": "did:example:alpha",
+            "timestamp": "2026-11-01T12:01:00.000Z"
+          }
+        ],
+        "expected": ["did:example:bravo", "did:example:alpha", "did:example:charlie"]
+      },
+      {
+        "name": "A2-tie-code-units",
+        "history": [
+          {
+            "action": "link",
+            "did": "did:web:agentland.us:agents:weatherwise",
+            "format": "agentland-did-link/1",
+            "linked_did": "did:example:bravo",
+            "timestamp": "2026-11-01T12:00:00.000Z"
+          },
+          {
+            "action": "link",
+            "did": "did:web:agentland.us:agents:weatherwise",
+            "format": "agentland-did-link/1",
+            "linked_did": "did:example:alpha",
+            "timestamp": "2026-11-01T12:00:00.000Z"
+          }
+        ],
+        "expected": ["did:example:alpha", "did:example:bravo"]
+      },
+      {
+        "name": "A3-unlink-relink",
+        "history": [
+          {
+            "action": "link",
+            "did": "did:web:agentland.us:agents:weatherwise",
+            "format": "agentland-did-link/1",
+            "linked_did": "did:example:alpha",
+            "timestamp": "2026-11-01T12:00:00.000Z"
+          },
+          {
+            "action": "link",
+            "did": "did:web:agentland.us:agents:weatherwise",
+            "format": "agentland-did-link/1",
+            "linked_did": "did:example:bravo",
+            "timestamp": "2026-11-01T12:01:00.000Z"
+          },
+          {
+            "action": "unlink",
+            "did": "did:web:agentland.us:agents:weatherwise",
+            "format": "agentland-did-link/1",
+            "linked_did": "did:example:alpha",
+            "timestamp": "2026-11-01T12:02:00.000Z"
+          },
+          {
+            "action": "link",
+            "did": "did:web:agentland.us:agents:weatherwise",
+            "format": "agentland-did-link/1",
+            "linked_did": "did:example:alpha",
+            "timestamp": "2026-11-01T12:03:00.000Z"
+          }
+        ],
+        "expected": ["did:example:bravo", "did:example:alpha"]
+      },
+      {
+        "name": "A4-unlink-all",
+        "history": [
+          {
+            "action": "link",
+            "did": "did:web:agentland.us:agents:weatherwise",
+            "format": "agentland-did-link/1",
+            "linked_did": "did:example:alpha",
+            "timestamp": "2026-11-01T12:00:00.000Z"
+          },
+          {
+            "action": "unlink",
+            "did": "did:web:agentland.us:agents:weatherwise",
+            "format": "agentland-did-link/1",
+            "linked_did": "did:example:alpha",
+            "timestamp": "2026-11-01T12:01:00.000Z"
+          }
+        ],
+        "expected": []
+      },
+      {
+        "name": "A5-same-instant",
+        "history": [
+          {
+            "action": "unlink",
+            "did": "did:web:agentland.us:agents:weatherwise",
+            "format": "agentland-did-link/1",
+            "linked_did": "did:example:alpha",
+            "timestamp": "2026-11-01T12:00:00.000Z"
+          },
+          {
+            "action": "link",
+            "did": "did:web:agentland.us:agents:weatherwise",
+            "format": "agentland-did-link/1",
+            "linked_did": "did:example:alpha",
+            "timestamp": "2026-11-01T12:00:00.000Z"
+          }
+        ],
+        "expected": []
+      },
+      {
+        "name": "A6-empty",
+        "history": [],
+        "expected": []
+      }
+    ],
+    "also_known_as": [
+      {
+        "name": "K0-none",
+        "handle": "weatherwise",
+        "links": [],
+        "expected": ["https://agentland.us/agents/weatherwise/did.json"]
+      },
+      {
+        "name": "K1-two",
+        "handle": "weatherwise",
+        "links": ["did:example:bravo", "did:example:alpha"],
+        "expected": [
+          "https://agentland.us/agents/weatherwise/did.json",
+          "did:example:bravo",
+          "did:example:alpha"
+        ]
+      }
+    ]
+  }
+}

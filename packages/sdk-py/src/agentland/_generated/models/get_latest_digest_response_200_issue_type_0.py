@@ -1,0 +1,186 @@
+from __future__ import annotations
+
+from collections.abc import Mapping
+from typing import Any, TypeVar, BinaryIO, TextIO, TYPE_CHECKING, Generator
+
+from attrs import define as _attrs_define
+from attrs import field as _attrs_field
+
+from ..types import UNSET, Unset
+
+from typing import cast
+
+if TYPE_CHECKING:
+  from ..models.get_latest_digest_response_200_issue_type_0_edges_item import GetLatestDigestResponse200IssueType0EdgesItem
+  from ..models.get_latest_digest_response_200_issue_type_0_rationales_item import GetLatestDigestResponse200IssueType0RationalesItem
+  from ..models.get_latest_digest_response_200_issue_type_0_records_item import GetLatestDigestResponse200IssueType0RecordsItem
+
+
+
+
+
+T = TypeVar("T", bound="GetLatestDigestResponse200IssueType0")
+
+
+
+@_attrs_define
+class GetLatestDigestResponse200IssueType0:
+    """ 
+        Attributes:
+            week (str):
+            starts_on (str):
+            ends_on (str):
+            published_at (str):
+            prev (None | str):
+            next_ (None | str):
+            rationales (list[GetLatestDigestResponse200IssueType0RationalesItem]):
+            edges (list[GetLatestDigestResponse200IssueType0EdgesItem]):
+            records (list[GetLatestDigestResponse200IssueType0RecordsItem]):
+     """
+
+    week: str
+    starts_on: str
+    ends_on: str
+    published_at: str
+    prev: None | str
+    next_: None | str
+    rationales: list[GetLatestDigestResponse200IssueType0RationalesItem]
+    edges: list[GetLatestDigestResponse200IssueType0EdgesItem]
+    records: list[GetLatestDigestResponse200IssueType0RecordsItem]
+
+
+
+
+
+    def to_dict(self) -> dict[str, Any]:
+        from ..models.get_latest_digest_response_200_issue_type_0_edges_item import GetLatestDigestResponse200IssueType0EdgesItem # noqa: PLC0415
+        from ..models.get_latest_digest_response_200_issue_type_0_rationales_item import GetLatestDigestResponse200IssueType0RationalesItem # noqa: PLC0415
+        from ..models.get_latest_digest_response_200_issue_type_0_records_item import GetLatestDigestResponse200IssueType0RecordsItem # noqa: PLC0415
+        week = self.week
+
+        starts_on = self.starts_on
+
+        ends_on = self.ends_on
+
+        published_at = self.published_at
+
+        prev: None | str
+        prev = self.prev
+
+        next_: None | str
+        next_ = self.next_
+
+        rationales = []
+        for rationales_item_data in self.rationales:
+            rationales_item = rationales_item_data.to_dict()
+            rationales.append(rationales_item)
+
+
+
+        edges = []
+        for edges_item_data in self.edges:
+            edges_item = edges_item_data.to_dict()
+            edges.append(edges_item)
+
+
+
+        records = []
+        for records_item_data in self.records:
+            records_item = records_item_data.to_dict()
+            records.append(records_item)
+
+
+
+
+        field_dict: dict[str, Any] = {}
+
+        field_dict.update({
+            "week": week,
+            "starts_on": starts_on,
+            "ends_on": ends_on,
+            "published_at": published_at,
+            "prev": prev,
+            "next": next_,
+            "rationales": rationales,
+            "edges": edges,
+            "records": records,
+        })
+
+        return field_dict
+
+
+
+    @classmethod
+    def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
+        from ..models.get_latest_digest_response_200_issue_type_0_edges_item import GetLatestDigestResponse200IssueType0EdgesItem # noqa: PLC0415
+        from ..models.get_latest_digest_response_200_issue_type_0_rationales_item import GetLatestDigestResponse200IssueType0RationalesItem # noqa: PLC0415
+        from ..models.get_latest_digest_response_200_issue_type_0_records_item import GetLatestDigestResponse200IssueType0RecordsItem # noqa: PLC0415
+        d = dict(src_dict)
+        week = d.pop("week")
+
+        starts_on = d.pop("starts_on")
+
+        ends_on = d.pop("ends_on")
+
+        published_at = d.pop("published_at")
+
+        def _parse_prev(data: object) -> None | str:
+            if data is None:
+                return data
+            return cast(None | str, data)
+
+        prev = _parse_prev(d.pop("prev"))
+
+
+        def _parse_next_(data: object) -> None | str:
+            if data is None:
+                return data
+            return cast(None | str, data)
+
+        next_ = _parse_next_(d.pop("next"))
+
+
+        rationales = []
+        _rationales = d.pop("rationales")
+        for rationales_item_data in (_rationales):
+            rationales_item = GetLatestDigestResponse200IssueType0RationalesItem.from_dict(rationales_item_data)
+
+
+
+            rationales.append(rationales_item)
+
+
+        edges = []
+        _edges = d.pop("edges")
+        for edges_item_data in (_edges):
+            edges_item = GetLatestDigestResponse200IssueType0EdgesItem.from_dict(edges_item_data)
+
+
+
+            edges.append(edges_item)
+
+
+        records = []
+        _records = d.pop("records")
+        for records_item_data in (_records):
+            records_item = GetLatestDigestResponse200IssueType0RecordsItem.from_dict(records_item_data)
+
+
+
+            records.append(records_item)
+
+
+        get_latest_digest_response_200_issue_type_0 = cls(
+            week=week,
+            starts_on=starts_on,
+            ends_on=ends_on,
+            published_at=published_at,
+            prev=prev,
+            next_=next_,
+            rationales=rationales,
+            edges=edges,
+            records=records,
+        )
+
+        return get_latest_digest_response_200_issue_type_0
+

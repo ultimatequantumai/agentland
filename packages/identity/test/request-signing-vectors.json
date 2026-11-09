@@ -1,0 +1,158 @@
+{
+  "attribution": {
+    "key": "RFC8032 section7.1 test1 (standards-vectors.json ed25519[0]); published test-only seed, never a production key. https://www.rfc-editor.org/rfc/rfc8032.html#section-7.1",
+    "preimage_source": "packages/identity/src/request-signing.ts requestSigningMessage",
+    "signature_encoding": "padded standard base64 (88 chars, /^[A-Za-z0-9+/]{86}==$/) exactly as sent in X-AL-Signature; convert to base64url only for verifyEd25519"
+  },
+  "preimage": "METHOD\nrequestTarget\nX-AL-Timestamp\nsha256hex(rawBody)",
+  "vectors": [
+    {
+      "name": "forecast-submit",
+      "method": "POST",
+      "request_target": "/v1/questions/00000000-0000-4000-8000-000000000001/forecasts",
+      "timestamp": "2026-10-31T12:00:00.000Z",
+      "raw_body_b64": "eyJwIjowLjYyfQ==",
+      "body_sha256_hex": "d32ba436f82f717fde9bab248776b340d5923958d77da5f732ffad6be2237cef",
+      "message_utf8": "POST\n/v1/questions/00000000-0000-4000-8000-000000000001/forecasts\n2026-10-31T12:00:00.000Z\nd32ba436f82f717fde9bab248776b340d5923958d77da5f732ffad6be2237cef",
+      "private_pkcs8_b64": "MC4CAQAwBQYDK2VwBCIEIJ1hsZ3v/VpguoRK9JLsLMREScVpezJpGXA7rAMcrn9g",
+      "public_jwk": {
+        "kty": "OKP",
+        "crv": "Ed25519",
+        "x": "11qYAYKxCrfVS_7TyWQHOg7hcvPapiMlrwIaaPcHURo"
+      },
+      "signature_b64": "ygq0yahXqN4p12KgMlu2jjJSwvoyhxNUgeXOe5X78PF8mjgE+Ym7yzqMCnMbVip8QeBMxmvNrAv2RA7c6KfzBw==",
+      "valid": true
+    },
+    {
+      "name": "reflection-non-ascii",
+      "method": "POST",
+      "request_target": "/v1/me/reflections",
+      "timestamp": "2026-10-31T12:00:00.250Z",
+      "raw_body_b64": "eyJib2R5IjoiY2Fmw6kifQ==",
+      "body_sha256_hex": "3cac32503b58e38842b65ca480fa5b7b6d57fc756d28212b27760525215855f4",
+      "message_utf8": "POST\n/v1/me/reflections\n2026-10-31T12:00:00.250Z\n3cac32503b58e38842b65ca480fa5b7b6d57fc756d28212b27760525215855f4",
+      "private_pkcs8_b64": "MC4CAQAwBQYDK2VwBCIEIJ1hsZ3v/VpguoRK9JLsLMREScVpezJpGXA7rAMcrn9g",
+      "public_jwk": {
+        "kty": "OKP",
+        "crv": "Ed25519",
+        "x": "11qYAYKxCrfVS_7TyWQHOg7hcvPapiMlrwIaaPcHURo"
+      },
+      "signature_b64": "Ur3BwahKJ30nOWGC20SnRnFRewpPFfunsZd0WWXX2sqGztcgg7c4b54V9VLgP0MfiBTHIh18ysLP0CL7mN7MCQ==",
+      "valid": true
+    },
+    {
+      "name": "delete-query-empty-body",
+      "method": "DELETE",
+      "request_target": "/v1/me/keys/00000000-0000-4000-8000-000000000002?reason=rotated",
+      "timestamp": "2026-10-31T12:00:01.000Z",
+      "raw_body_b64": "",
+      "body_sha256_hex": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "message_utf8": "DELETE\n/v1/me/keys/00000000-0000-4000-8000-000000000002?reason=rotated\n2026-10-31T12:00:01.000Z\ne3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "private_pkcs8_b64": "MC4CAQAwBQYDK2VwBCIEIJ1hsZ3v/VpguoRK9JLsLMREScVpezJpGXA7rAMcrn9g",
+      "public_jwk": {
+        "kty": "OKP",
+        "crv": "Ed25519",
+        "x": "11qYAYKxCrfVS_7TyWQHOg7hcvPapiMlrwIaaPcHURo"
+      },
+      "signature_b64": "S7xRa6iUVD/rq3WQ5Lcx3CqMR4HbEXF3DJgxMXBziWM+20PE+8bRPlGSGafOcDKwb++MO49kT/FrCm0Ug2xoDA==",
+      "valid": true
+    }
+  ],
+  "tamper": [
+    {
+      "name": "forecast-submit-method",
+      "base": "forecast-submit",
+      "field": "method",
+      "method": "PUT",
+      "request_target": "/v1/questions/00000000-0000-4000-8000-000000000001/forecasts",
+      "timestamp": "2026-10-31T12:00:00.000Z",
+      "raw_body_b64": "eyJwIjowLjYyfQ==",
+      "body_sha256_hex": "d32ba436f82f717fde9bab248776b340d5923958d77da5f732ffad6be2237cef",
+      "message_utf8": "PUT\n/v1/questions/00000000-0000-4000-8000-000000000001/forecasts\n2026-10-31T12:00:00.000Z\nd32ba436f82f717fde9bab248776b340d5923958d77da5f732ffad6be2237cef",
+      "private_pkcs8_b64": "MC4CAQAwBQYDK2VwBCIEIJ1hsZ3v/VpguoRK9JLsLMREScVpezJpGXA7rAMcrn9g",
+      "public_jwk": {
+        "kty": "OKP",
+        "crv": "Ed25519",
+        "x": "11qYAYKxCrfVS_7TyWQHOg7hcvPapiMlrwIaaPcHURo"
+      },
+      "signature_b64": "ygq0yahXqN4p12KgMlu2jjJSwvoyhxNUgeXOe5X78PF8mjgE+Ym7yzqMCnMbVip8QeBMxmvNrAv2RA7c6KfzBw==",
+      "valid": false
+    },
+    {
+      "name": "forecast-submit-request-target",
+      "base": "forecast-submit",
+      "field": "request_target",
+      "method": "POST",
+      "request_target": "/v1/questions/00000000-0000-4000-8000-000000000002/forecasts",
+      "timestamp": "2026-10-31T12:00:00.000Z",
+      "raw_body_b64": "eyJwIjowLjYyfQ==",
+      "body_sha256_hex": "d32ba436f82f717fde9bab248776b340d5923958d77da5f732ffad6be2237cef",
+      "message_utf8": "POST\n/v1/questions/00000000-0000-4000-8000-000000000002/forecasts\n2026-10-31T12:00:00.000Z\nd32ba436f82f717fde9bab248776b340d5923958d77da5f732ffad6be2237cef",
+      "private_pkcs8_b64": "MC4CAQAwBQYDK2VwBCIEIJ1hsZ3v/VpguoRK9JLsLMREScVpezJpGXA7rAMcrn9g",
+      "public_jwk": {
+        "kty": "OKP",
+        "crv": "Ed25519",
+        "x": "11qYAYKxCrfVS_7TyWQHOg7hcvPapiMlrwIaaPcHURo"
+      },
+      "signature_b64": "ygq0yahXqN4p12KgMlu2jjJSwvoyhxNUgeXOe5X78PF8mjgE+Ym7yzqMCnMbVip8QeBMxmvNrAv2RA7c6KfzBw==",
+      "valid": false
+    },
+    {
+      "name": "forecast-submit-timestamp",
+      "base": "forecast-submit",
+      "field": "timestamp",
+      "method": "POST",
+      "request_target": "/v1/questions/00000000-0000-4000-8000-000000000001/forecasts",
+      "timestamp": "2026-10-31T12:00:00.001Z",
+      "raw_body_b64": "eyJwIjowLjYyfQ==",
+      "body_sha256_hex": "d32ba436f82f717fde9bab248776b340d5923958d77da5f732ffad6be2237cef",
+      "message_utf8": "POST\n/v1/questions/00000000-0000-4000-8000-000000000001/forecasts\n2026-10-31T12:00:00.001Z\nd32ba436f82f717fde9bab248776b340d5923958d77da5f732ffad6be2237cef",
+      "private_pkcs8_b64": "MC4CAQAwBQYDK2VwBCIEIJ1hsZ3v/VpguoRK9JLsLMREScVpezJpGXA7rAMcrn9g",
+      "public_jwk": {
+        "kty": "OKP",
+        "crv": "Ed25519",
+        "x": "11qYAYKxCrfVS_7TyWQHOg7hcvPapiMlrwIaaPcHURo"
+      },
+      "signature_b64": "ygq0yahXqN4p12KgMlu2jjJSwvoyhxNUgeXOe5X78PF8mjgE+Ym7yzqMCnMbVip8QeBMxmvNrAv2RA7c6KfzBw==",
+      "valid": false
+    },
+    {
+      "name": "forecast-submit-raw-body",
+      "base": "forecast-submit",
+      "field": "raw_body",
+      "method": "POST",
+      "request_target": "/v1/questions/00000000-0000-4000-8000-000000000001/forecasts",
+      "timestamp": "2026-10-31T12:00:00.000Z",
+      "raw_body_b64": "eyJwIjowLjYzfQ==",
+      "body_sha256_hex": "36b91e92cd3e9ec4c48e29b0dc8648e9d8ccb33f8bfee15e791306ec444def69",
+      "message_utf8": "POST\n/v1/questions/00000000-0000-4000-8000-000000000001/forecasts\n2026-10-31T12:00:00.000Z\n36b91e92cd3e9ec4c48e29b0dc8648e9d8ccb33f8bfee15e791306ec444def69",
+      "private_pkcs8_b64": "MC4CAQAwBQYDK2VwBCIEIJ1hsZ3v/VpguoRK9JLsLMREScVpezJpGXA7rAMcrn9g",
+      "public_jwk": {
+        "kty": "OKP",
+        "crv": "Ed25519",
+        "x": "11qYAYKxCrfVS_7TyWQHOg7hcvPapiMlrwIaaPcHURo"
+      },
+      "signature_b64": "ygq0yahXqN4p12KgMlu2jjJSwvoyhxNUgeXOe5X78PF8mjgE+Ym7yzqMCnMbVip8QeBMxmvNrAv2RA7c6KfzBw==",
+      "valid": false
+    },
+    {
+      "name": "forecast-submit-signature",
+      "base": "forecast-submit",
+      "field": "signature",
+      "method": "POST",
+      "request_target": "/v1/questions/00000000-0000-4000-8000-000000000001/forecasts",
+      "timestamp": "2026-10-31T12:00:00.000Z",
+      "raw_body_b64": "eyJwIjowLjYyfQ==",
+      "body_sha256_hex": "d32ba436f82f717fde9bab248776b340d5923958d77da5f732ffad6be2237cef",
+      "message_utf8": "POST\n/v1/questions/00000000-0000-4000-8000-000000000001/forecasts\n2026-10-31T12:00:00.000Z\nd32ba436f82f717fde9bab248776b340d5923958d77da5f732ffad6be2237cef",
+      "private_pkcs8_b64": "MC4CAQAwBQYDK2VwBCIEIJ1hsZ3v/VpguoRK9JLsLMREScVpezJpGXA7rAMcrn9g",
+      "public_jwk": {
+        "kty": "OKP",
+        "crv": "Ed25519",
+        "x": "11qYAYKxCrfVS_7TyWQHOg7hcvPapiMlrwIaaPcHURo"
+      },
+      "signature_b64": "ywq0yahXqN4p12KgMlu2jjJSwvoyhxNUgeXOe5X78PF8mjgE+Ym7yzqMCnMbVip8QeBMxmvNrAv2RA7c6KfzBw==",
+      "valid": false
+    }
+  ]
+}

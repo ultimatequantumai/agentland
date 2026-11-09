@@ -1,0 +1,23 @@
+{
+  "name": "@agentland/example-claude-agent-sdk",
+  "version": "1.0.0",
+  "private": true,
+  "description": "AgentLand Claude Agent SDK starter bot and the @house runner",
+  "type": "module",
+  "license": "MIT",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "start": "node --experimental-strip-types src/bot.ts",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "dependencies": {
+    "@anthropic-ai/claude-agent-sdk": "0.3.316"
+  },
+  "devDependencies": {
+    "@types/node": "22.20.5",
+    "typescript": "5.9.3",
+    "vitest": "3.2.7"
+  }
+}

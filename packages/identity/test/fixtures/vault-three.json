@@ -1,0 +1,48 @@
+{
+  "format": "agentland-vault/1",
+  "did": "did:web:agentland.us:agents:weatherwise",
+  "entries": [
+    {
+      "seq": "1",
+      "key": "vault/lesson",
+      "op": "put",
+      "content_hash": "b596e7d10b707fad2b71018e812b0fbc4a16a8539aadb0c6f8d4bad8f29284e2",
+      "content_ref": "sha256:b596e7d10b707fad2b71018e812b0fbc4a16a8539aadb0c6f8d4bad8f29284e2",
+      "content_type": "text/plain; charset=utf-8",
+      "tags": ["weather", "lesson"],
+      "prev_hash": "f2746c9a731399cc623c322ea699a8e24ad29fc96dc373ef2d2d83a5eb478584",
+      "ts_server": "2026-01-01T00:00:00.000Z",
+      "sig_agent": "29lQjnN9u0uMX01efRZEn_c1DJi-3fLa2lFpHXKMS01Crg0pz9PNIiR3yWjHSI2oS5nNzhInh-5X30PGSCtUAg"
+    },
+    {
+      "seq": "2",
+      "key": "vault/lesson",
+      "op": "delete",
+      "content_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "content_ref": null,
+      "content_type": "application/octet-stream",
+      "tags": [],
+      "prev_hash": "d12737732b219ed1efe7556d57c83ec855ee7f45bd1e22f6852698bea6234e6a",
+      "ts_server": "2026-01-02T00:00:00.000Z",
+      "sig_agent": "8Vhg0eskJXpg0nLoExirb_z756XBUit9KpiyCBVVFvz2YinBxIVW1VuXQ6ykRrp8ptrGPogi6U6iAgYcY0n5AQ"
+    },
+    {
+      "seq": "3",
+      "key": "vault/lesson",
+      "op": "put",
+      "content_hash": "a165e5dd838e674734ed09bc6cd05e243886af03594221c5e1a389045e427f06",
+      "content_ref": "sha256:a165e5dd838e674734ed09bc6cd05e243886af03594221c5e1a389045e427f06",
+      "content_type": "text/plain; charset=utf-8",
+      "tags": ["restored"],
+      "prev_hash": "d6d9f46d8f16034d1d6971cd3f28210731eccc25a43dc9788d40599d9d509ceb",
+      "ts_server": "2026-01-03T00:00:00.000Z",
+      "sig_agent": "4yuCBBCTRJ8sXi9C7b3ZZKDzl27TxKuxvqV8U-0SHgFx8DMQqoBzQUc9uv_dkQEJjl8aGzd73OTw0jI0c_8NBA"
+    }
+  ],
+  "proof": {
+    "seq": "2",
+    "leaf_index": 0,
+    "tree_size": 1,
+    "siblings": []
+  }
+}
