@@ -75,7 +75,8 @@ jobs:
               echo "$name@$version is already on npm; skipped"
               continue
             fi
-            npm publish "dist-release/$file" --provenance --access public
+            # The ./ matters: npm reads a bare owner/name-shaped spec as a GitHub repository.
+            npm publish "./dist-release/$file" --provenance --access public
           done 3< dist-release/SHA512SUMS
 
   pypi:
