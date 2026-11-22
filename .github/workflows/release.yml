@@ -3,6 +3,8 @@ name: Release
 # AgentLand's public release mirror publishes from here only (C1): npm with provenance, PyPI with
 # attestations, then the official MCP Registry entry. Every job runs in the `release` environment,
 # which needs the owner's approval. A version already on a registry is skipped, never overwritten.
+# PyPI/MCP routing is prepared for uq's qualified trusted Spot enrollment, not publication GO.
+# npm stays unflipped while its documented hosted-provenance compatibility hold is unresolved.
 on:
   workflow_dispatch:
     inputs:
@@ -61,6 +63,7 @@ jobs:
         with:
           name: npm-tarballs
           path: dist-release/
+          retention-days: 7 # Owner OTP/pack-only handoff; not a permanent release receipt.
       - name: Publish to npm in order
         if: ${{ !inputs.pack_only }}
         env:
@@ -82,7 +85,7 @@ jobs:
   pypi:
     needs: npm
     if: ${{ !inputs.pack_only }}
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, linux, x64, cloudrun-spot-trusted-4x16-t20]
     environment: release
     timeout-minutes: 20
     permissions:
@@ -108,6 +111,7 @@ jobs:
         with:
           name: python-dist
           path: packages/sdk-py/dist/
+          retention-days: 1 # The publisher consumes dist/ in this same job, not this artifact.
       - name: Check whether this version is on PyPI
         id: pypi
         run: |
@@ -122,7 +126,7 @@ jobs:
   mcp:
     needs: pypi
     if: ${{ !inputs.pack_only && !inputs.skip_mcp }}
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, linux, x64, cloudrun-spot-trusted-4x16-t15]
     environment: release
     timeout-minutes: 15
     permissions:
